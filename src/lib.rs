@@ -1,17 +1,24 @@
+mod arithmetic;
+mod money_enum;
+
 use std::fmt::Display;
 use num_traits::Num;
+use crate::money_enum::MoneyNum;
 
-pub struct Money<T: Num + Copy + Display> {
+pub struct Money<T: MoneyNum> {
   pub amount: T,
   pub currency: Currency
 }
 
-pub trait MoneyTrait<T: Num + Copy + Display> {
+pub trait MoneyTrait<T: MoneyNum> {
   fn new(amount: T, currency: Currency) -> Self;
   fn display(&self) -> String;
+  fn add(&mut self, amount: T) -> &Self;
+  fn subtract(&mut self, amount: T) -> &Self;
+  fn split(&self, ways: u32) -> Vec<Money<T>>;
 }
 
-impl<T: Num + Copy + Display> MoneyTrait<T> for Money<T> {
+impl<T: MoneyNum> MoneyTrait<T> for Money<T> {
   fn new(amount: T, currency: Currency) -> Self {
     return Money {
       amount,
@@ -22,6 +29,25 @@ impl<T: Num + Copy + Display> MoneyTrait<T> for Money<T> {
   fn display(&self) -> String {
     let res = String::new();
     return res;
+  }
+
+  fn add(&mut self, amount: T) -> &Self {
+      let result = arithmetic::math::add(self.amount, amount);
+      self.amount = result;
+      return self;
+  }
+
+  fn subtract(&mut self, amount: T) -> &Self {
+      let result = arithmetic::math::subtract(self.amount, amount);
+      self.amount = result;
+      return self;
+  }
+
+  fn split(&self, ways: u32) -> Vec<Money<T>> {
+    let money = self;
+    
+    // Placeholder implementation, update as needed
+    Vec::new()
   }
 }
 
