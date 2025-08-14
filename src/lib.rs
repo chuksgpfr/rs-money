@@ -1,8 +1,6 @@
 mod arithmetic;
 mod money_enum;
 
-use std::fmt::Display;
-use num_traits::Num;
 use crate::money_enum::MoneyNum;
 
 pub struct Money<T: MoneyNum> {
@@ -45,7 +43,7 @@ impl<T: MoneyNum> MoneyTrait<T> for Money<T> {
 
   fn split(&self, ways: u32) -> Vec<Money<T>> {
     let money = self;
-    
+
     // Placeholder implementation, update as needed
     Vec::new()
   }
